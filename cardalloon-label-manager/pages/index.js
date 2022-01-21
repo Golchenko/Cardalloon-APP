@@ -1,13 +1,15 @@
 import { Page, Layout, Card } from "@shopify/polaris";
-import TabsHeader from "../components/header"
+import HeaderTabs from "../components/tabs"
+import SearchBar from "../components/search-bar"
 
 const Index = () => (
-  <Page>
+  <Page fullWidth>
     <Layout>
       <Layout.Section>
         <Card>
-          <TabsHeader/>
-          <p>View a summary of your online store’s performance.</p>
+          <HeaderTabs />
+          <SearchBar />
+          
         </Card>
       </Layout.Section>
     </Layout>
