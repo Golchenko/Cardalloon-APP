@@ -1,0 +1,35 @@
+.order-list {
+  padding: 20px 40px;
+
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
+}
+
+.order-list .Polaris-Card {
+  width: 175px;
+  margin-top: 0;
+}
+
+.order-item__title {
+  border-bottom: 1px solid #e1e3e5;
+  text-align: center;
+  padding: 5px;
+}
+
+.order-item__buttons {
+  border-top: 1px solid #e1e3e5;
+  display: flex;
+  justify-content: space-around;
+}
+
+.card-buttons__button {
+  width: 25%;
+  padding: 5px 0;
+}
+
+.card-buttons__button:not(:last-child) {
+  border-right: 1px solid #e1e3e5;
+}
