@@ -1,11 +1,11 @@
 .order-list {
-  padding: 20px 40px;
-
+  padding: 20px 40px 50px 40px;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   grid-template-rows: repeat(3, 1fr);
   grid-column-gap: 10px;
-  grid-row-gap: 10px;
+  grid-row-gap: 15px;
+  border-bottom: 1px solid #e1e3e5;
 }
 
 .order-list .Polaris-Card {
@@ -32,4 +32,13 @@
 
 .card-buttons__button:not(:last-child) {
   border-right: 1px solid #e1e3e5;
+}
+
+.card-buttons__button .Polaris-Icon {
+  cursor: pointer;
+}
+
+.Polaris-ButtonGroup {
+  justify-content: center;
+  padding: 20px 0;
 }
