@@ -12,7 +12,7 @@ const Index = () => (
         <Card>
           <HeaderTabs />
           <SearchBar />
-          <Order />
+          <Order /> 
           <OrdersPagination />
         </Card>
       </Layout.Section>
