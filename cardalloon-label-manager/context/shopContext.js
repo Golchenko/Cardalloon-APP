@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-
+import gql from 'graphql-tag';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 const ShopContext = React.createContext();
 
 let domain = 'cardalloon-test.myshopify.com';
@@ -13,7 +14,6 @@ class ShopProvider extends Component {
   }; 
 
   fetchAllOrders = async () => {
-
 
 
     this.setState({ orders: orders });
