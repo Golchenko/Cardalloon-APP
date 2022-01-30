@@ -2,10 +2,11 @@ import "@babel/polyfill";
 import dotenv from "dotenv";
 import "isomorphic-fetch";
 import createShopifyAuth, { verifyRequest } from "@shopify/koa-shopify-auth";
-import Shopify, { ApiVersion } from "@shopify/shopify-api";
+import Shopify, { ApiVersion, DataType } from "@shopify/shopify-api";
 import Koa from "koa";
 import next from "next";
 import Router from "koa-router";
+const koaBody = require("koa-body");
 
 dotenv.config();
 const port = parseInt(process.env.PORT, 10) || 8081;
@@ -39,7 +40,6 @@ app.prepare().then(async () => {
       async afterAuth(ctx) {
         // Access token and shop available in ctx.state.shopify
         const { shop, accessToken, scope } = ctx.state.shopify;
-        console.log("!!!!!!!!11accessToken ", accessToken)
         const host = ctx.query.host;
         ACTIVE_SHOPIFY_SHOPS[shop] = scope;
 
@@ -69,6 +69,42 @@ app.prepare().then(async () => {
     ctx.respond = false;
     ctx.res.statusCode = 200;
   };
+
+  ///////
+
+
+  router.get("/test-endpoint", async (ctx) => {
+    console.log("session: Attempting....: ")
+    const session = await Shopify.Utils.loadCurrentSession(ctx.req, ctx.res);
+
+    console.log("session:GET: ", session);
+
+    const sessionToReturn = {
+      shopId: session.id,
+      shop: session.shop,
+      scope: session.scope
+    }
+    console.log("session:GET: to rerun: ", sessionToReturn);
+
+    const client = new Shopify.Clients.Rest(session.shop, session.accessToken);
+
+    const shopOrders = await client.get({
+      path: 'orders',
+      type: DataType.JSON,
+    });
+
+    ctx.body = {
+      status: "OK_REQUEST",
+      data: {
+        session: sessionToReturn,
+        currentUser: session.onlineAccessInfo.associated_user,
+        orders: shopOrders.body,
+      },
+    };
+    ctx.status = 200;
+  });
+
+  ///////
 
   router.post("/webhooks", async (ctx) => {
     try {
@@ -101,6 +137,7 @@ app.prepare().then(async () => {
   });
 
   server.use(router.allowedMethods());
+  server.use(koaBody());
   server.use(router.routes());
   server.listen(port, () => {
     console.log(`> Ready on http://localhost:${port}`);
