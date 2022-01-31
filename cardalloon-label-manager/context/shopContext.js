@@ -2,12 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useAppBridge } from "@shopify/app-bridge-react";
 import { getSessionToken } from "@shopify/app-bridge-utils";
 import { Icon, Page, Frame, Loading } from "@shopify/polaris";
-import {
-  EditMajor,
-  LinkMinor,
-  ImportMinor,
-  PauseMinor,
-} from "@shopify/polaris-icons";
+import { EditMajor, LinkMinor, ImportMinor, PauseMinor, } from "@shopify/polaris-icons";
 
 const DEFAULT_APP_STATES = {
   PENDING: "PENDING",
@@ -22,13 +17,13 @@ const getAppSettings = () => {
     message: DEFAULT_APP_STATES.PENDING,
   });
 
-  const [shopOrders, GetShopOrders] = useState("");
+  const [shopOrders, getShopOrders] = useState("");
 
   useEffect(() => {
-    getTestEndpoint();
+    getCurrentSession();
   }, []);
 
-  const getTestEndpoint = async () => {
+  const getCurrentSession = async () => {
     setAppState(DEFAULT_APP_STATES.PENDING);
 
     try {
@@ -42,7 +37,7 @@ const getAppSettings = () => {
 
       console.log("RESPONSE DATA : TEST END-POINT: GET :: ", responseData);
 
-      GetShopOrders({
+      getShopOrders({
         orders: responseData.data.orders.orders,
       });
 
@@ -57,7 +52,7 @@ const getAppSettings = () => {
     appState,
     shopOrders,
     setAppState,
-    getTestEndpoint,
+    getCurrentSession,
   };
 };
 
@@ -85,17 +80,17 @@ const AppError = (props) => {
   );
 };
 
-const FetchAllOrders = (props) => {
-  const rows = props.shopOrders.orders.map((order) => {
+const RenderOrders = (props) => {
+  const orderIds = props.shopOrders.orders.map((order) => {
     return [order.name];
   });
 
   return (
     <div className="order-list">
-      {rows.map((row) => (
+      {orderIds.map((id) => (
         <div className="Polaris-Card">
           <div className="order-item__title">
-            <span>Order {row}</span>
+            <span>Order {id}</span>
           </div>
           <div className="order-item__image">
             <img
@@ -106,7 +101,7 @@ const FetchAllOrders = (props) => {
             ></img>
           </div>
           <div className="order-item__buttons card-buttons">
-            <div className="card-buttons__button" onClick={console.log("menuAction")}>
+            <div className="card-buttons__button" onClick={console.log("modalClick")}>
               <Icon source={EditMajor} color="base" />
             </div>
             <div className="card-buttons__button">
@@ -127,14 +122,13 @@ const FetchAllOrders = (props) => {
 
 const MyApp = (props) => {
   return (
-    <FetchAllOrders
-      merchantDetails={props.merchantDetails}
+    <RenderOrders
       shopOrders={props.shopOrders}
     />
   );
 };
 
-const ShopContext = () => {
+const AppMain = () => {
   const { appState, shopOrders } = getAppSettings();
 
   const renderMyApp = () => {
@@ -153,7 +147,7 @@ const ShopContext = () => {
     }
   };
 
-  return <div>{renderMyApp()}</div>;
+  return <div>{ renderMyApp() }</div>;
 };
 
-export default ShopContext;
+export default AppMain;

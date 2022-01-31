@@ -6,7 +6,6 @@ export default function ModalWindow() {
 
   const modalClick = useCallback(() => setActive(!active), [active]);
 
-//   const activator = <Button onClick={modalClick}>Open</Button>;
   const [value, setValue] = useState(
     "Billing address or credit card's address wasn't available"
   );

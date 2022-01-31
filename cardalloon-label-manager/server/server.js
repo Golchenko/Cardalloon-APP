@@ -74,7 +74,6 @@ app.prepare().then(async () => {
 
 
   router.get("/test-endpoint", async (ctx) => {
-    console.log("session: Attempting....: ")
     const session = await Shopify.Utils.loadCurrentSession(ctx.req, ctx.res);
 
     console.log("session:GET: ", session);
