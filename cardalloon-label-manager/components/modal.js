@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from "react";
-import { Button, Modal, TextField, RangeSlider } from "@shopify/polaris";
+import { Modal, TextField, RangeSlider } from "@shopify/polaris";
 
-export default function ModalWindow() {
+export default function ModalWindow({open, onCloseHandler}) {
   const [active, setActive] = useState(true);
 
   const modalClick = useCallback(() => setActive(!active), [active]);
@@ -20,8 +20,9 @@ export default function ModalWindow() {
   return (
     <div>
       <Modal
-        open={active}
-        onClose={modalClick}
+        open={open}
+        onClose={onCloseHandler}
+
         title="Edit message"
         primaryAction={{
           content: "Save",
@@ -30,7 +31,7 @@ export default function ModalWindow() {
         secondaryActions={[
           {
             content: "Cancel",
-            onAction: modalClick,
+            onAction: onCloseHandler,
           },
         ]}
       >

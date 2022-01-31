@@ -3,6 +3,7 @@ import { useAppBridge } from "@shopify/app-bridge-react";
 import { getSessionToken } from "@shopify/app-bridge-utils";
 import { Icon, Page, Frame, Loading } from "@shopify/polaris";
 import { EditMajor, LinkMinor, ImportMinor, PauseMinor, } from "@shopify/polaris-icons";
+import ModalWindow from "./modal"
 
 const DEFAULT_APP_STATES = {
   PENDING: "PENDING",
@@ -17,7 +18,8 @@ const getAppSettings = () => {
     message: DEFAULT_APP_STATES.PENDING,
   });
 
-  const [shopOrders, getShopOrders] = useState("");
+  const [shopOrders, setShopOrders] = useState("");
+
 
   useEffect(() => {
     getCurrentSession();
@@ -37,7 +39,7 @@ const getAppSettings = () => {
 
       console.log("RESPONSE DATA : TEST END-POINT: GET :: ", responseData);
 
-      getShopOrders({
+      setShopOrders({
         orders: responseData.data.orders.orders,
       });
 
@@ -85,7 +87,13 @@ const RenderOrders = (props) => {
     return [order.name];
   });
 
+  const [showModal, setShowModal] = useState(false);
   return (
+    <>
+    <ModalWindow
+      open={showModal}
+      onCloseHandler={()=>setShowModal(false)}
+    />
     <div className="order-list">
       {orderIds.map((id) => (
         <div className="Polaris-Card">
@@ -101,7 +109,7 @@ const RenderOrders = (props) => {
             ></img>
           </div>
           <div className="order-item__buttons card-buttons">
-            <div className="card-buttons__button" onClick={console.log("modalClick")}>
+            <div className="card-buttons__button" onClick={() => setShowModal(true)}>
               <Icon source={EditMajor} color="base" />
             </div>
             <div className="card-buttons__button">
@@ -117,6 +125,8 @@ const RenderOrders = (props) => {
         </div>
       ))}
     </div>
+    </>
+ 
   );
 };
 
