@@ -71,6 +71,12 @@ const getAppSettings = () => {
 
       console.log("RESPONSE DATA : TEST END-POINT: GET :: ", responseData);
 
+      
+
+
+
+
+
       // if (responseData.status === "EMPTY_SETTINGS") {
       //   return;
       // }

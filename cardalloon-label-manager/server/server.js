@@ -125,11 +125,11 @@ app.prepare().then(async () => {
     //   type: DataType.JSON,
     // });
 
-    const shopProducts = await client.get({
-      path: 'orders',
-      type: DataType.JSON,
-      limit: 100,
-    });
+    // const shopProducts = await client.get({
+    //   path: 'orders',
+    //   type: DataType.JSON,  
+
+    // });
 
     const shopCustomers = await client.get({
       path: 'customers',
