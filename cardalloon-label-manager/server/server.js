@@ -7,6 +7,9 @@ import Koa from "koa";
 import next from "next";
 import Router from "koa-router";
 const koaBody = require("koa-body");
+import gql from 'graphql-tag';
+import { useQuery } from 'react-apollo';
+
 
 dotenv.config();
 const port = parseInt(process.env.PORT, 10) || 8081;
@@ -101,8 +104,28 @@ app.prepare().then(async () => {
       },
     };
     ctx.status = 200;
+//////////
+    const queryString = `{
+      products (first: 3) {
+        edges {
+          node {
+            id
+            title
+          }
+        }
+      }
+    }`
+    // `session` is built as part of the OAuth process
+    const clientgql = new Shopify.Clients.Graphql(session.shop, session.accessToken);
+    const products = await clientgql.query({
+      data: queryString,
+    });
+    console.log("products", products)
   });
 
+  
+
+  
   ///////
 
   router.post("/webhooks", async (ctx) => {

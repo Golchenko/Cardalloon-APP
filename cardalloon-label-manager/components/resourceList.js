@@ -74,9 +74,6 @@ const AppError = (props) => {
   return (
     <Page singleColumn title="Cardalloon | Something's Gone Wrong">
       <div style={{ height: "100px" }}>
-        <Frame>
-          <Loading />
-        </Frame>
       </div>
     </Page>
   );
@@ -90,43 +87,43 @@ const RenderOrders = (props) => {
   const [showModal, setShowModal] = useState(false);
   return (
     <>
-    <ModalWindow
-      open={showModal}
-      onCloseHandler={()=>setShowModal(false)}
-    />
-    <div className="order-list">
-      {orderIds.map((id) => (
-        <div className="Polaris-Card">
-          <div className="order-item__title">
-            <span>Order {id}</span>
+      <ModalWindow
+        open={showModal}
+        onCloseHandler={() => setShowModal(false)}
+      />
+      <div className="order-list">
+        {orderIds.map((id) => (
+          <div className="Polaris-Card">
+            <div className="order-item__title">
+              <span>Order {id}</span>
+            </div>
+            <div className="order-item__image">
+              <img
+                alt=""
+                width="100%"
+                height="100%"
+                src="https://imgur.com/QyH9I9n.png"
+              ></img>
+            </div>
+            <div className="order-item__buttons card-buttons">
+              <div className="card-buttons__button" onClick={() => setShowModal(true)}>
+                <Icon source={EditMajor} color="base" />
+              </div>
+              <div className="card-buttons__button">
+                <Icon source={ImportMinor} color="base" />
+              </div>
+              <div className="card-buttons__button">
+                <Icon source={LinkMinor} color="base" />
+              </div>
+              <div className="card-buttons__button">
+                <Icon source={PauseMinor} color="base" />
+              </div>
+            </div>
           </div>
-          <div className="order-item__image">
-            <img
-              alt=""
-              width="100%"
-              height="100%"
-              src="https://imgur.com/QyH9I9n.png"
-            ></img>
-          </div>
-          <div className="order-item__buttons card-buttons">
-            <div className="card-buttons__button" onClick={() => setShowModal(true)}>
-              <Icon source={EditMajor} color="base" />
-            </div>
-            <div className="card-buttons__button">
-              <Icon source={ImportMinor} color="base" />
-            </div>
-            <div className="card-buttons__button">
-              <Icon source={LinkMinor} color="base" />
-            </div>
-            <div className="card-buttons__button">
-              <Icon source={PauseMinor} color="base" />
-            </div>
-          </div>
-        </div>
-      ))}
-    </div>
+        ))}
+      </div>
     </>
- 
+
   );
 };
 
@@ -157,7 +154,7 @@ const AppMain = () => {
     }
   };
 
-  return <div>{ renderMyApp() }</div>;
+  return <div>{renderMyApp()}</div>;
 };
 
 export default AppMain;
