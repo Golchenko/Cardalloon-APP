@@ -93,7 +93,9 @@ const RenderOrders = (props) => {
       />
       <div className="order-list">
         {orderIds.map((id) => (
-          <div className="Polaris-Card">
+          <div className="Polaris-Card"
+          key={id}
+          >
             <div className="order-item__title">
               <span>Order {id}</span>
             </div>
