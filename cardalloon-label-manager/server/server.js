@@ -7,9 +7,6 @@ import Koa from "koa";
 import next from "next";
 import Router from "koa-router";
 const koaBody = require("koa-body");
-import gql from 'graphql-tag';
-import { useQuery } from 'react-apollo';
-
 
 dotenv.config();
 const port = parseInt(process.env.PORT, 10) || 8081;
@@ -98,11 +95,24 @@ app.prepare().then(async () => {
 
 
     const queryString = `{
-      orders (first: 3) {
+      orders(first:200, reverse:true) {
+        pageInfo {
+          hasNextPage
+          hasPreviousPage
+        }
         edges {
+          cursor
           node {
+            name
+            tags
+            displayFulfillmentStatus
             createdAt
-        tags
+            customer {
+              id
+              displayName
+              email
+              tags
+            }
           }
         }
       }
@@ -123,14 +133,8 @@ app.prepare().then(async () => {
     };
     ctx.status = 200;
   });
-  //////////
 
-
-
-
-
-
-  ///////
+  //////
 
   router.post("/webhooks", async (ctx) => {
     try {

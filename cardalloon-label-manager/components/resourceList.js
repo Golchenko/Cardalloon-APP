@@ -39,7 +39,7 @@ const getAppSettings = () => {
       console.log("RESPONSE DATA : ", responseData.data.orders.body.data.orders.edges);
 
       setShopOrders({
-        orders: responseData.data.orders.body.data.orders,
+        orders: responseData.data.orders.body.data.orders.edges,
       });
 
       setAppState(DEFAULT_APP_STATES.SUCCESS);
@@ -80,7 +80,8 @@ const AppError = (props) => {
 
 const RenderOrders = (props) => {
   const orderIds = props.shopOrders.orders.map((order) => {
-    return [order];
+    // console.log("orderIds", props.shopOrders.orders);    
+    return [order.node.name];    
   });
 
   const [showModal, setShowModal] = useState(false);
