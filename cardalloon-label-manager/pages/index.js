@@ -18,6 +18,7 @@ const Index = () => (
         </Card>
       </Layout.Section>
     </Layout>
+
   </Page>
 
 

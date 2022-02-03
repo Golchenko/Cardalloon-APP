@@ -79,53 +79,57 @@ app.prepare().then(async () => {
   router.get("/test-endpoint", async (ctx) => {
     const session = await Shopify.Utils.loadCurrentSession(ctx.req, ctx.res);
 
-    console.log("session:GET: ", session);
+    // console.log("session:GET: ", session);
 
-    const sessionToReturn = {
-      shopId: session.id,
-      shop: session.shop,
-      scope: session.scope
-    }
-    console.log("session:GET: to rerun: ", sessionToReturn);
+    // const sessionToReturn = {
+    //   shopId: session.id,
+    //   shop: session.shop,
+    //   scope: session.scope
+    // }
+    // console.log("session:GET: to rerun: ", sessionToReturn);
 
-    const client = new Shopify.Clients.Rest(session.shop, session.accessToken);
+    // const client = new Shopify.Clients.Rest(session.shop, session.accessToken);
 
-    const shopOrders = await client.get({
-      path: 'orders',
-      type: DataType.JSON,
-    });
+    // const shopOrders = await client.get({
+    //   path: 'orders',
+    //   type: DataType.JSON,
+    // });
 
-    ctx.body = {
-      status: "OK_REQUEST",
-      data: {
-        session: sessionToReturn,
-        currentUser: session.onlineAccessInfo.associated_user,
-        orders: shopOrders.body,
-      },
-    };
-    ctx.status = 200;
-//////////
+
+
     const queryString = `{
-      products (first: 3) {
+      orders (first: 3) {
         edges {
           node {
-            id
-            title
+            createdAt
+        tags
           }
         }
       }
     }`
-    // `session` is built as part of the OAuth process
-    const clientgql = new Shopify.Clients.Graphql(session.shop, session.accessToken);
-    const products = await clientgql.query({
+
+    const fetchOrders = new Shopify.Clients.Graphql(session.shop, session.accessToken);
+    const shopOrders = await fetchOrders.query({
       data: queryString,
     });
-    console.log("products", products)
+    // console.log("orders", shopOrders)
+    ctx.body = {
+      status: "OK_REQUEST",
+      data: {
+        // session: sessionToReturn,
+        // currentUser: session.onlineAccessInfo.associated_user,
+        orders: shopOrders,
+      },
+    };
+    ctx.status = 200;
   });
+  //////////
 
-  
 
-  
+
+
+
+
   ///////
 
   router.post("/webhooks", async (ctx) => {

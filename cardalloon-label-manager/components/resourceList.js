@@ -20,7 +20,6 @@ const getAppSettings = () => {
 
   const [shopOrders, setShopOrders] = useState("");
 
-
   useEffect(() => {
     getCurrentSession();
   }, []);
@@ -37,10 +36,10 @@ const getAppSettings = () => {
 
       const responseData = await res.json();
 
-      console.log("RESPONSE DATA : TEST END-POINT: GET :: ", responseData);
+      console.log("RESPONSE DATA : ", responseData.data.orders.body.data.orders.edges);
 
       setShopOrders({
-        orders: responseData.data.orders.orders,
+        orders: responseData.data.orders.body.data.orders,
       });
 
       setAppState(DEFAULT_APP_STATES.SUCCESS);
@@ -81,7 +80,7 @@ const AppError = (props) => {
 
 const RenderOrders = (props) => {
   const orderIds = props.shopOrders.orders.map((order) => {
-    return [order.name];
+    return [order];
   });
 
   const [showModal, setShowModal] = useState(false);
